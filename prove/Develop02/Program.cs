@@ -1,9 +1,18 @@
 using System;
 
-class Program
+class Program  // Ensure only one class has Main()
 {
-    static void Main(string[] args)
+    public void Run()
     {
-        Console.WriteLine("Hello Develop02 World!");
+        Journal journal = new Journal();
+        PromptMan promptMan = new PromptMan();
+        Menu menu = new Menu(journal, promptMan);
+        menu.DisplayMenu();
+    }
+
+    static void Main()
+    {
+        Program program = new Program();
+        program.Run();
     }
 }
