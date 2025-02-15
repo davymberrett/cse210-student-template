@@ -1,23 +1,49 @@
 using System;
+using System.Collections.Generic;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Fraction f1 = new Fraction();
-        Console.WriteLine(f1.GetFractionString());
-        Console.WriteLine(f1.GetDecimalValue());
+        var scriptures = new List<Scripture>
+        {
+            new Scripture(new Reference("Proverbs", 3, 5, 6), "Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."),
+            new Scripture(new Reference("D&C", 6, 36), "Look unto me in every thought; doubt not, fear not."),
+            new Scripture(new Reference("John", 3, 16), "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."),
+        };
 
-        Fraction f2 = new Fraction(5);
-        Console.WriteLine(f2.GetFractionString());
-        Console.WriteLine(f2.GetDecimalValue());
+        var givenScriptures = new HashSet<Scripture>();
 
-        Fraction f3 = new Fraction(3, 4);
-        Console.WriteLine(f3.GetFractionString());
-        Console.WriteLine(f3.GetDecimalValue());
+        foreach (var scripture in scriptures)
+        {
+            if (givenScriptures.Contains(scripture)) continue;
 
-        Fraction f4 = new Fraction(1, 3);
-        Console.WriteLine(f4.GetFractionString());
-        Console.WriteLine(f4.GetDecimalValue());
+            givenScriptures.Add(scripture);
+            
+            while (!scripture.AllHidden())
+            {
+                ClearConsole();
+                Console.WriteLine(scripture);
+                Console.WriteLine("Press Enter to continue or type 'quit' to exit: ");
+                var userInput = Console.ReadLine();
+                if (userInput.ToLower() == "quit")
+                {
+                    return;
+                }
+                scripture.HideRandomWords();
+            }
+
+            ClearConsole();
+            Console.WriteLine(scripture);
+            Console.WriteLine("All words are hidden. Moving to next scripture.");
+            Console.ReadLine();
+        }
+
+        Console.WriteLine("All scriptures have been given out. Program ended.");
+    }
+
+    static void ClearConsole()
+    {
+        Console.Clear();
     }
 }
