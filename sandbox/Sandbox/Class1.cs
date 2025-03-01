@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Book
+public class Class1
 {
     protected string _athore = "";
     protected string _title = "";

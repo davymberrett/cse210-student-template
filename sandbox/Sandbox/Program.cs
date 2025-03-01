@@ -1,10 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 
-class Program
+public class Program
 {
-    static void Main()
+   public static void Main(string[] args)
     {
-        
+        Console.WriteLine("1\n2\n3");
+        Console.Write("What is your choose? ");
+        string choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            Class1 first = 
+        }
     }
+}
