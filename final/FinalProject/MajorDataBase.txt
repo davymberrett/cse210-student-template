@@ -1,0 +1,58 @@
+College of Arts and Sciences
+- Biology
+- Chemistry
+- Physics
+- Mathematics
+- English
+- History
+- Political Science
+- Psychology
+- Sociology
+
+School of Business
+- Accounting
+- Finance
+- Marketing
+- Management
+- Business Administration
+- International Business
+- Supply Chain Management
+
+College of Engineering
+- Civil Engineering
+- Mechanical Engineering
+- Electrical Engineering
+- Computer Engineering
+- Aerospace Engineering
+- Chemical Engineering
+- Biomedical Engineering
+
+School of Education
+- Elementary Education
+- Secondary Education
+- Special Education
+- Educational Leadership
+- Curriculum and Instruction
+
+College of Health Sciences
+- Nursing
+- Public Health
+- Physical Therapy
+- Occupational Therapy
+- Health Administration
+- Nutrition and Dietetics
+
+School of Communication and Media
+- Journalism
+- Public Relations
+- Media Studies
+- Film and Television Production
+- Digital Communication
+
+College of Fine Arts
+- Music
+- Theater Arts
+- Visual Arts
+- Dance
+- Art History
+

@@ -1,18 +1,20 @@
 using System;
-using System.Collections.Generic;
-using System.Threading;
+using System.Diagnostics;
 
-public class Program
+class Program
 {
-   public static void Main(string[] args)
+    static void Main(string[] args)
     {
-        Console.WriteLine("1\n2\n3");
-        Console.Write("What is your choose? ");
-        string choice = Console.ReadLine();
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start(); // Start the timer
 
-        switch (choice)
+        for (int i = 1; i <= 400000; i++)
         {
-            Class1 first = 
+            Console.WriteLine(i);
         }
+
+        stopwatch.Stop(); // Stop the timer
+        TimeSpan elapsedTime = stopwatch.Elapsed;
+        Console.WriteLine($"Counting to 400000 completed in {elapsedTime.TotalSeconds:F4} seconds.");
     }
 }
