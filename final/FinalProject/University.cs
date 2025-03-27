@@ -8,7 +8,9 @@ public class University
     public string Location { get; set; }
     public List<Student> Students { get; set; }
     public List<Teacher> Teachers { get; set; }
+    public List<Department> Departments { get; private set; }
     private string databaseFilePath = @"C:\Users\berre\OneDrive\Desktop\Pro. Classes\cse210\cse210-student-template\final\FinalProject\Database.txt";
+    private List<string> MajorClassesList { get; set; }
 
     public University(string name, string location)
     {
@@ -16,6 +18,8 @@ public class University
         Location = location;
         Students = new List<Student>();
         Teachers = new List<Teacher>();
+        Departments = new List<Department>();
+        //MajorClasses = new Dictionary<string, List<string>>();
         LoadData();
     }
 
@@ -72,6 +76,58 @@ public class University
         }
     }
 
+    public void DisplayDepartments()
+    {
+        foreach (var department in Departments)
+        {
+            Console.WriteLine($"- {department.Name}");
+        }
+    }
+
+    public void DisplayMajors(string departmentName)
+    {
+        Department department = GetDepartmentByName(departmentName);
+        if (department != null)
+        {
+            department.DisplayMajors();
+        }
+        else
+        {
+            Console.WriteLine("Department not found.");
+        }
+    }
+
+    public void DisplayClasses(string departmentName, string majorName)
+    {
+        Department department = GetDepartmentByName(departmentName);
+        if (department != null)
+        {
+            department.DisplayClasses(majorName);
+        }
+        else
+        {
+            Console.WriteLine("Department not found.");
+        }
+    }
+
+    private Department GetDepartmentByName(string name)
+    {
+        return Departments.Find(department => department.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private Major GetMajorByName(string name)
+    {
+        foreach (var department in Departments)
+        {
+            var major = department.GetMajorByName(name);
+            if (major != null)
+            {
+                return major;
+            }
+        }
+        return null;
+    }
+
     private void LoadData()
     {
         //Console.WriteLine($"Current Directory: {Directory.GetCurrentDirectory()}"); // Debugging statement
@@ -121,6 +177,81 @@ public class University
             {
                 writer.WriteLine($"Teacher,{teacher.ID},{teacher.Name}");
             }
+        }
+    }
+
+    public void LoadDepartmentsFromFile(string filePath)
+    {
+        Departments.Clear();
+        try
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            Department currentDepartment = null;
+
+            foreach (string line in lines)
+            {
+                string trimmedLine = line.Trim();
+
+                if (string.IsNullOrEmpty(trimmedLine))
+                    continue;
+
+                if (!trimmedLine.StartsWith("-") && !trimmedLine.StartsWith(";"))
+                {
+                    // Create a new department
+                    currentDepartment = new Department(trimmedLine);
+                    Departments.Add(currentDepartment);
+                }
+                else if (trimmedLine.StartsWith("-") && currentDepartment != null)
+                {
+                    // Add a major to the current department
+                    currentDepartment.AddMajor(trimmedLine.Substring(1).Trim());
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading departments: {ex.Message}");
+        }
+    }
+
+    public void LoadMajorClassesFromFile(string filePath)
+    {
+        try
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            Major currentMajor = null;
+    
+            foreach (string line in lines)
+            {
+                string trimmedLine = line.Trim();
+    
+                if (string.IsNullOrEmpty(trimmedLine))
+                    continue;
+    
+                if (!trimmedLine.StartsWith("-") && trimmedLine != ";")
+                {
+                    // Start a new major
+                    currentMajor = GetMajorByName(trimmedLine);
+                    if (currentMajor == null)
+                    {
+                        Console.WriteLine($"Major '{trimmedLine}' not found in any department.");
+                    }
+                }
+                else if (trimmedLine.StartsWith("-") && currentMajor != null)
+                {
+                    // Add a class to the current major
+                    currentMajor.Classes.Add(trimmedLine.Substring(1).Trim());
+                }
+                else if (trimmedLine == ";")
+                {
+                    // End of the current major's classes
+                    currentMajor = null;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading major classes: {ex.Message}");
         }
     }
 }
